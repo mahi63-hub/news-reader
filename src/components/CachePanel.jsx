@@ -1,4 +1,6 @@
-﻿import React, { useState, useEffect } from "react";
+import React
+import PerformanceMonitor from './PerformanceMonitor';
+import { useCacheStats } from '../hooks/useCacheStats';, { useState, useEffect } from "react";
 import { getStorageStats, getBookmarks, clearArticleCache } from "../lib/database";
 
 export default function CachePanel() {
@@ -37,6 +39,7 @@ export default function CachePanel() {
 
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6">
+      <PerformanceMonitor />
       <h3 className="text-xl font-bold text-gray-900 mb-6">Storage & Cache</h3>
 
       {/* Stats Cards */}
@@ -73,7 +76,7 @@ export default function CachePanel() {
           <div className="space-y-3">
             {bookmarks.slice(0, 3).map((bookmark, index) => (
               <div key={index} className="flex items-start p-3 bg-gray-50 rounded-lg">
-                <div className="text-yellow-500 mr-2">★</div>
+                <div className="text-yellow-500 mr-2">?</div>
                 <p className="text-sm text-gray-700 line-clamp-2">{bookmark.title}</p>
               </div>
             ))}
