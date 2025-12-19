@@ -1,8 +1,8 @@
-﻿const CACHE_NAME = "news-reader-v1";
+const CACHE_NAME = "news-reader-v1";
 const STATIC_ASSETS = [
-  "/news-reader/",
-  "/news-reader/index.html",
-  "/news-reader/manifest.json"
+  "./",
+  "./index.html",
+  "./manifest.json"
 ];
 
 // Install event - cache static assets
@@ -127,8 +127,8 @@ async function syncOfflineActions() {
 self.addEventListener("push", (event) => {
   const options = {
     body: event.data?.text() || "New news articles available!",
-    icon: "/news-reader/icon-192.png",
-    badge: "/news-reader/icon-192.png",
+    icon: "./icon-192.png",
+    badge: "./icon-192.png",
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
