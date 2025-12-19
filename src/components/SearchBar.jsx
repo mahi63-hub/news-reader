@@ -1,71 +1,43 @@
-﻿import { Search, X, Filter } from "lucide-react";
-import { useState } from "react";
+﻿import React, { useState } from "react";
 
 export default function SearchBar({ onSearch }) {
   const [query, setQuery] = useState("");
-  const [isActive, setIsActive] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (query.trim()) {
-      onSearch(query.trim());
+      onSearch(query);
     }
   };
 
-  const handleClear = () => {
-    setQuery("");
-    onSearch("");
-    setIsActive(false);
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit(e);
+    }
   };
 
   return (
-    <div className="w-full">
-      <form onSubmit={handleSubmit} className="relative">
-        <div className="relative">
-          <Search className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 ${
-            isActive ? "text-blue-500" : "text-gray-400"
-          }`} />
-          
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onFocus={() => setIsActive(true)}
-            onBlur={() => setIsActive(false)}
-            placeholder="Search news articles..."
-            className="w-full pl-12 pr-12 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-          />
-          
-          {query && (
-            <button
-              type="button"
-              onClick={handleClear}
-              className="absolute right-12 top-1/2 transform -translate-y-1/2 p-1 hover:bg-gray-200 rounded-lg"
-            >
-              <X className="w-4 h-4 text-gray-500" />
-            </button>
-          )}
-          
-          <button
-            type="submit"
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-colors"
-            disabled={!query.trim()}
-          >
-            <Search className="w-4 h-4" />
-          </button>
-        </div>
-        
-        {/* Filters (optional) */}
-        <div className="flex items-center gap-3 mt-3">
-          <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
-            <Filter className="w-4 h-4" />
-            <span>Filters</span>
-          </button>
-          <div className="text-sm text-gray-500">
-            Press Enter to search
-          </div>
-        </div>
-      </form>
+    <div className="w-full max-w-2xl mx-auto mb-8">
+      <div className="relative">
+        <input
+          type="text"
+          placeholder="Search news articles..."
+          className="w-full px-6 py-4 text-lg bg-gray-50 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyPress={handleKeyPress}
+        />
+        <button
+          onClick={handleSubmit}
+          className="absolute right-3 top-3 px-5 py-2 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-colors shadow-md"
+        >
+          Search
+        </button>
+      </div>
+      <div className="mt-3 text-sm text-gray-500">
+        <span className="inline-block px-3 py-1 mr-2 bg-gray-100 rounded-full">Filters</span>
+        Press Enter to search
+      </div>
     </div>
   );
 }
